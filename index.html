@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Where Is The Iss</h1>
+    <p>
+        latitude : <span id="lat"></span> <br>
+        longitude : <span id="lon"></span>
+    </p>
+    <h1>
+        Last Price : <span id="ps"></span> <br>
+        Persen : <span id="pr"></span>
+    </h1>
+</body>
+
+<script>
+    const url = "https://api.wheretheiss.at/v1/satellites/25544";
+    const btc = "https://api.binance.com/api/v3/ticker/24hr?symbol=BTCUSDT";
+
+    async function getISS() {
+        const response = await fetch(url);
+        const data = await response.json();
+        const { latitude, longitude } = data;
+
+        document.getElementById('lat').textContent = latitude;
+        document.getElementById('lon').textContent = longitude;
+    }
+    async function getBTC() {
+        const response = await fetch(btc);
+        const data = await response.json();
+        const { lastPrice, priceChangePercent } = data;
+
+        document.getElementById('ps').innerHTML = lastPrice;
+        document.getElementById('pr').textContent = priceChangePercent;
+    }
+    getISS();
+    setInterval(getISS, 1000);
+
+    getBTC();
+    setInterval(getBTC, 1000);
+</script>
+
+</html>
